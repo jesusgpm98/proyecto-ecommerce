@@ -40,7 +40,7 @@ Route::get('politicas', function () {
 
 Route::get('producto', function () {
     return view('producto');
-    })->name('producto');    
+    })->name('producto');
 
 Route::get('ejemplo', function () {
     return view('ejemplo');
@@ -58,6 +58,24 @@ Route::get('contenido', function () {
     return view('contenido.contenido');
     })->name('contenido');
 
+
+
+// ------------------------------------------------------------------------
+
+Route::get('/producto/crear', 'MiprodController@create')->name('producto.create');
+Route::post('/producto/save', 'MiprodController@save')->name('producto.save');
+
+Route::get('/image/file/{filename}', 'MiprodController@getImage')->name('image.file');
+Route::get('/producto/todos', 'MiprodController@showProductos')->name('producto.show');
+
+Route::get('/admin/usuarios', 'UserController@show')->name('usuarios.show');
+
+Route::get('/admin/usuarios/edit/{id}', 'UserController@edit')->name('usuarios.edit');
+Route::post('/admin/usuarios/{id}', 'UserController@update')->name('usuarios.update');
+
+Route::get('/logout', 'UserController@logout')->name('logout');
+
+// ------------------------------------------------------------------------
 
 Route::get('/categoria', 'CategoriaController@index');
 Route::post('/categoria/registrar', 'CategoriaController@store');
@@ -88,5 +106,3 @@ Route::post('/user/registrar', 'UserController@store');
 Route::put('/user/actualizar', 'UserController@update');
 Route::put('/user/desactivar', 'UserController@desactivar');
 Route::put('/user/activar', 'UserController@activar');
-
-

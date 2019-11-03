@@ -14,8 +14,7 @@ class CreateArticulosTable extends Migration
     public function up()
     {
         Schema::create('articulos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idcategoria')->unsigned();
+            $table->bigIncrements('id');
             $table->string('codigo', 50)->nullable();
             $table->string('nombre', 100)->unique();
             $table->decimal('precio_venta', 11, 2);
@@ -24,7 +23,8 @@ class CreateArticulosTable extends Migration
             $table->boolean('condicion')->default(1);
             $table->timestamps();
 
-            $table->foreign('idcategoria')->references('id')->on('categorias');
+            //$table->integer('id_categoria')->unsigned();
+            //$table->foreign('id_categoria')->references('id')->on('categorias')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

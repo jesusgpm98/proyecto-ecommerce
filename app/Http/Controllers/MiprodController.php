@@ -2,104 +2,65 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use App\Miprod;
 
 class MiprodController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {   
-        //return Miprod::where('user_id', auth()->id())->get();
-    if($request->ajax()){
-        return Miprod::where('user_id', auth()->id())->get();
-      }else{
-        return view('mimenu');
-    }
-    }   
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  //se encarga de saber si está logeado el usuario
+  public function __construct(){
+    $this->middleware('auth');
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-   
-     public function store(Request $request)
-    {
+  public function create(){
+    return view('productos.create');
+  }
 
-     $miprod = new Miprod();
-     $miprod->nombre = $request->nombre;
-     $miprod->descripcion = $request->descripcion;
-     $miprod->user_id = auth()->id();
-     $miprod->save();
+  public function save(Request $request){
 
-    return $miprod;
-    }  
-    
+    //recoger los datos
+    $nombre = $request->input('nombre');
+    $precio = $request->input('precio');
+    $email = $request->input('email');
+    $descripcion = $request->input('description');
+    $image_path = $request->file('image_path');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    //asignar valores a los objetos
+    $user = \Auth::user();
+    $productos = new Miprod();
+    $productos->user_id = $user->id;
+    $productos->descripcion = $descripcion;
+    $productos->nombre = $nombre;
+    $productos->precio = $precio;
+    $productos->correo = $email;
+
+    //subir fichero
+    if($image_path){
+      $imagen = date('Y-m-d').'_'.$image_path->getClientOriginalName();
+      Storage::disk('images')->put($imagen, File::get($image_path));
+      $productos->foto = $imagen;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    //guardar datos en bd
+    $productos->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
-     public function update(Request $request, $id)
-    {        
-    $miprod = Miprod::find($id);
-    $miprod->nombre = $request->nombre;
-    $miprod->descripcion = $request->descripcion;
-    $miprod->save();
-    return $miprod;
-    }
+    return redirect()->route('producto.create')->with('status', 'producto creado');
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
- 
-     public function destroy($id)
-    {
-    $miprod = Miprod::find($id);
-    $miprod->delete();
-    }
+  public function showProductos(){
+    //aqui los pueden ordenar de manera que quieran, pero lo que hace en este caso es sacar todos los
+    //productos de la bd para mostrarlos
+    $productos = Miprod::orderBy('id', 'desc')->paginate(5);
+    return view('productos.show', ['productos' => $productos]);
+  }
+
+  public function getImage($filename){
+    //esta funcion busca en la carpeta storage la subcarpeta que creamos para guardar las imagenes y mostrarlas
+    $file = Storage::disk('images')->get($filename);
+    return new response($file,200);
+  }
 }
