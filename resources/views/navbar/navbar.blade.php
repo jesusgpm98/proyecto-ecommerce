@@ -10,9 +10,13 @@
         <a href="{{ route('usuarios.show') }}">usuarios</a>
         <a href="{{ route('producto.show') }}">Ver productos</a>
         <a href="{{ route('producto.create') }}">Subir Imagenes</a>
+        <a href="{{ route('cart.index') }}">Carrito</a>
         <a href="{{ route('logout') }}">Logout</a>
       @else
         <a href="{{ route('inicio') }}">Inicio</a>
+        <a href="{{ route('producto.show') }}">Ver productos</a>
+        <a href="{{ route('producto.create') }}">Subir Imagenes</a>
+        <a href="{{ route('cart.index') }}">Carrito</a>
         <a href="{{ route('logout') }}">Logout</a>
       @endif
     @else

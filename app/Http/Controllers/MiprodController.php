@@ -54,8 +54,17 @@ class MiprodController extends Controller
   public function showProductos(){
     //aqui los pueden ordenar de manera que quieran, pero lo que hace en este caso es sacar todos los
     //productos de la bd para mostrarlos
-    $productos = Miprod::orderBy('id', 'desc')->paginate(5);
-    return view('productos.show', ['productos' => $productos]);
+    $productos = Miprod::orderBy('id', 'ASC')->paginate(5);
+    return view('productos.show', compact('productos'));
+  }
+
+  public function detalle($id){
+    //$producto = Miprod::joinfindOrFail($id);
+    $producto = Miprod::join('users', 'miprods.user_id', '=', 'users.id')
+                      ->select(['miprods.*', 'users.name', 'users.rut', 'users.direccion', 'users.email'])
+                      ->findOrFail($id);
+
+    return view('productos.detalle', compact('producto'));
   }
 
   public function getImage($filename){

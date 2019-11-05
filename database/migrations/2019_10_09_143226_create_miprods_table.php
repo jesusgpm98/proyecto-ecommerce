@@ -14,7 +14,7 @@ class CreateMiprodsTable extends Migration
     public function up()
     {
         Schema::create('miprods', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('nombre');
             $table->text('descripcion');
             $table->text('precio');

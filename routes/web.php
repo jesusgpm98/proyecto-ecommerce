@@ -64,45 +64,18 @@ Route::get('contenido', function () {
 
 Route::get('/producto/crear', 'MiprodController@create')->name('producto.create');
 Route::post('/producto/save', 'MiprodController@save')->name('producto.save');
-
 Route::get('/image/file/{filename}', 'MiprodController@getImage')->name('image.file');
 Route::get('/producto/todos', 'MiprodController@showProductos')->name('producto.show');
+Route::get('/producto/detalle/{id}', 'MiprodController@detalle')->name('producto.detalle');
+
+Route::get('/shopping-cart', 'CartController@index')->name('cart.index');
+Route::post('/shopping-cart/{id}', 'CartController@add')->name('cart.agregar');
+Route::delete('/shopping-cart/delete/{id}', 'CartController@delete')->name('cart.delete');
 
 Route::get('/admin/usuarios', 'UserController@show')->name('usuarios.show');
-
 Route::get('/admin/usuarios/edit/{id}', 'UserController@edit')->name('usuarios.edit');
 Route::post('/admin/usuarios/{id}', 'UserController@update')->name('usuarios.update');
 
 Route::get('/logout', 'UserController@logout')->name('logout');
 
 // ------------------------------------------------------------------------
-
-Route::get('/categoria', 'CategoriaController@index');
-Route::post('/categoria/registrar', 'CategoriaController@store');
-Route::put('/categoria/actualizar', 'CategoriaController@update');
-Route::put('/categoria/desactivar', 'CategoriaController@desactivar');
-Route::put('/categoria/activar', 'CategoriaController@activar');
-Route::get('/categoria/selectCategoria', 'CategoriaController@selectCategoria');
-
-Route::get('/articulo', 'ArticuloController@index');
-Route::post('/articulo/registrar', 'ArticuloController@store');
-Route::put('/articulo/actualizar', 'ArticuloController@update');
-Route::put('/articulo/desactivar', 'ArticuloController@desactivar');
-Route::put('/articulo/activar', 'ArticuloController@activar');
-
-Route::get('/cliente', 'ClienteController@index');
-Route::post('/cliente/registrar', 'ClienteController@store');
-Route::put('/cliente/actualizar', 'ClienteController@update');
-
-Route::get('/proveedor', 'ProveedorController@index');
-Route::post('/proveedor/registrar', 'ProveedorController@store');
-Route::put('/proveedor/actualizar', 'ProveedorController@update');
-
-Route::get('/rol', 'RolController@index');
-Route::get('/rol/selectRol', 'RolController@selectRol');
-
-Route::get('/user', 'UserController@index');
-Route::post('/user/registrar', 'UserController@store');
-Route::put('/user/actualizar', 'UserController@update');
-Route::put('/user/desactivar', 'UserController@desactivar');
-Route::put('/user/activar', 'UserController@activar');
