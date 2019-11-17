@@ -6,24 +6,55 @@
     @auth
       {{-- si el usuario es admin tendrá estos accesos --}}
       @if (Auth::user()->id_rol == 1)
-        <a href="{{ route('inicio') }}">Inicio</a>
-        <a href="{{ route('usuarios.show') }}">usuarios</a>
-        <a href="{{ route('producto.show') }}">Ver productos</a>
-        <a href="{{ route('producto.create') }}">Subir Imagenes</a>
-        <a href="{{ route('cart.index') }}">Carrito</a>
-        <a href="{{ route('logout') }}">Logout</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a href="{{ route('inicio') }}" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('usuarios.show') }}" class="nav-link">usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('producto.show') }}" class="nav-link">Ver productos</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('producto.create') }}" class="nav-link">Subir Imagenes</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('cart.index') }}" class="nav-link">Carrito</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link">Logout</a>
+          </li>
+        </ul>
       @else
-        <a href="{{ route('inicio') }}">Inicio</a>
-        <a href="{{ route('producto.show') }}">Ver productos</a>
-        <a href="{{ route('producto.create') }}">Subir Imagenes</a>
-        <a href="{{ route('cart.index') }}">Carrito</a>
-        <a href="{{ route('logout') }}">Logout</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a href="{{ route('inicio') }}" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('producto.show') }}" class="nav-link">Ver productos</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('producto.create') }}" class="nav-link">Subir Imagenes</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('cart.index') }}" class="nav-link">Carrito</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link">Logout</a>
+          </li>
+        </ul>
       @endif
     @else
-      <a href="{{ route('login') }}">INGRESAR</a>
-      &nbsp;&nbsp;
-      @if (Route::has('register'))
-        <a href="{{ route('register') }}">REGISTRARSE</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="{{ route('login') }}" class="nav-link">Ingresar</a>
+        </li>
+        @if (Route::has('register'))
+          <li class="nav-item">
+            <a href="{{ route('register') }}" class="nav-link">Registrarse</a>
+          </li>
+        </ul>
       @endif
     @endauth
   </div>

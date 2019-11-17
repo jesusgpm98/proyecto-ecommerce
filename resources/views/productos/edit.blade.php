@@ -62,17 +62,17 @@
         @endif
         <div class="card">
 
-          <div class="card-header">Crear Producto</div>
+          <div class="card-header">Modificar Producto</div>
 
           <div class="card-body">
 
-            <form action="{{ route('producto.save') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('producto.update', ['id' => $producto->id]) }}" method="POST" enctype="multipart/form-data">
               @csrf
 
               <div class="form-group row">
                 <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre</label>
                 <div class="col-md-6">
-                    <input id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" required autofocus/>
+                    <input id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ $producto->nombre }}" required autofocus/>
                     @error('nombre')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -84,7 +84,7 @@
               <div class="form-group row">
                 <label for="precio" class="col-md-4 col-form-label text-md-right">Precio</label>
                 <div class="col-md-6">
-                    <input id="precio" type="number" name="precio" class="form-control @error('precio') is-invalid @enderror" value="{{ old('precio') }}" required autofocus/>
+                    <input id="precio" type="number" name="precio" class="form-control @error('precio') is-invalid @enderror" value="{{ $producto->precio }}" required autofocus/>
                     @error('precio')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -96,7 +96,7 @@
               <div class="form-group row">
                 <label for="email" class="col-md-4 col-form-label text-md-right">Correo</label>
                 <div class="col-md-6">
-                    <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus/>
+                    <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ $producto->correo }}" required autofocus/>
                     @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -124,7 +124,7 @@
               <div class="form-group row">
                 <label for="description" class="col-md-4 col-form-label text-md-right">Descripción</label>
                 <div class="col-md-6">
-                    <textarea id="description" name="description" class="form-control" required></textarea>
+                    <textarea id="description" name="description" class="form-control" required>{{ $producto->descripcion }}</textarea>
                     @error('description')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
               <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">
                   <button type="submit" class="btn btn-primary btn-block">
-                    Publicar
+                    Guardar
                   </button>
                 </div>
               </div>

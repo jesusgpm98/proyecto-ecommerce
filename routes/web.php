@@ -65,8 +65,17 @@ Route::get('contenido', function () {
 Route::get('/producto/crear', 'MiprodController@create')->name('producto.create');
 Route::post('/producto/save', 'MiprodController@save')->name('producto.save');
 Route::get('/image/file/{filename}', 'MiprodController@getImage')->name('image.file');
-Route::get('/producto/todos', 'MiprodController@showProductos')->name('producto.show');
+Route::get('/producto/todos/{search?}', 'MiprodController@showProductos')->name('producto.show');
 Route::get('/producto/detalle/{id}', 'MiprodController@detalle')->name('producto.detalle');
+
+//eliminar producto
+Route::get('/producto/delete/{id}', 'MiprodController@delete')->name('producto.delete');
+
+//editar producto
+Route::get('/producto/edit/{id}', 'MiprodController@edit')->name('producto.edit');
+Route::post('/producto/update/{id}', 'MiprodController@update')->name('producto.update');
+
+Route::post('/quienes/email', 'HomeController@sendEmail')->name('home.email');
 
 Route::get('/shopping-cart', 'CartController@index')->name('cart.index');
 Route::post('/shopping-cart/{id}', 'CartController@add')->name('cart.agregar');
@@ -77,5 +86,7 @@ Route::get('/admin/usuarios/edit/{id}', 'UserController@edit')->name('usuarios.e
 Route::post('/admin/usuarios/{id}', 'UserController@update')->name('usuarios.update');
 
 Route::get('/logout', 'UserController@logout')->name('logout');
+
+Route::get('/quienes','HomeController@quienes')->name('quienes');
 
 // ------------------------------------------------------------------------
